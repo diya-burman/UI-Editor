@@ -83,7 +83,7 @@ const FurnitureCustomizer = () => {
       title: "Added to cart! 🛒",
       description: (
         <div className="mt-2 space-y-1">
-          <p className="font-semibold">Cozy Longe chair - $200</p>
+          <p className="font-semibold">Buffet - ₹15,000</p>
           <p className="text-sm">Arms: {selectedOptions.arms}</p>
           <p className="text-sm">Arms Finish: {selectedOptions.armsFinish}</p>
           <p className="text-sm">Legs Finish: {selectedOptions.legsFinish}</p>
@@ -200,7 +200,7 @@ const FurnitureCustomizer = () => {
               >
                 <img
                   src={images[selectedImage]}
-                  alt="Cozy Longe chair"
+                  alt="Buffet"
                   className="w-full h-auto object-contain"
                 />
                 <div
@@ -307,7 +307,7 @@ const FurnitureCustomizer = () => {
                   fontWeight: config.typography.fontWeight + 200,
                 }}
               >
-                Cozy Longe chair
+                Buffet
               </h1>
               <Button size="icon" variant="ghost">
                 <Copy className="h-4 w-4" />
@@ -407,7 +407,7 @@ const FurnitureCustomizer = () => {
               <div>
                 <div className="text-sm text-muted-foreground">Product Price</div>
                 <div className="text-2xl font-bold">
-                  $ 200 <span className="text-lg text-muted-foreground line-through">$ 245</span>
+                  ₹15,000 <span className="text-lg text-muted-foreground line-through">₹25,000</span>
                 </div>
               </div>
             </div>
