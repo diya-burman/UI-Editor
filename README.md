@@ -2,10 +2,6 @@
 
 A React-based dynamic UI editor that allows users to customize furniture designs in real-time with live preview. Built with React, TypeScript, Tailwind CSS, and shadcn/ui components.
 
-## 🚀 Live Demo
-
-**URL**: https://lovable.dev/projects/7efcaf57-46b2-458b-a9ae-d66b8bc9b525
-
 ## 📋 Features
 
 ### Core Features
@@ -184,10 +180,6 @@ npm run dev
 
 4. Open your browser to `http://localhost:8080`
 
-## 🚀 Deployment
-
-Simply open [Lovable](https://lovable.dev/projects/7efcaf57-46b2-458b-a9ae-d66b8bc9b525) and click on Share → Publish.
-
 ## 📝 Usage Guide
 
 ### Basic Usage
@@ -243,14 +235,6 @@ Simply open [Lovable](https://lovable.dev/projects/7efcaf57-46b2-458b-a9ae-d66b8
 - Version history
 - Custom CSS export
 
-## 📄 License
-
-This project was created with [Lovable](https://lovable.dev) and is available for use and modification.
-
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
-
-## 📧 Support
-
-For support, visit [Lovable Documentation](https://docs.lovable.dev/)
