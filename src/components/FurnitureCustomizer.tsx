@@ -1,11 +1,19 @@
-import { useState } from 'react';
-import { ChevronDown, ChevronUp, RotateCcw, Maximize2, ZoomIn, ZoomOut, Copy } from 'lucide-react';
-import { useUIConfig } from '@/contexts/UIConfigContext';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import furnitureMain from '@/assets/furniture-main.png';
-import furnitureThumb1 from '@/assets/furniture-thumb-1.png';
-import furnitureThumb2 from '@/assets/furniture-thumb-2.png';
+import { useState } from "react";
+import {
+  ChevronDown,
+  ChevronUp,
+  RotateCcw,
+  Maximize2,
+  ZoomIn,
+  ZoomOut,
+  Copy,
+} from "lucide-react";
+import { useUIConfig } from "@/contexts/UIConfigContext";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import furnitureMain from "@/assets/furniture-main.png";
+import furnitureThumb1 from "@/assets/furniture-thumb-1.png";
+import furnitureThumb2 from "@/assets/furniture-thumb-2.png";
 
 interface CustomizationOption {
   id: string;
@@ -15,42 +23,67 @@ interface CustomizationOption {
 }
 
 const colorSwatches = [
-  { name: 'Leather Brown', value: '#6B5744', category: 'LEATHER' },
-  { name: 'Leather Olive', value: '#5A6B5A', category: 'LEATHER' },
-  { name: 'Leather Teal', value: '#4A7C7C', category: 'LEATHER' },
-  { name: 'Leather Forest', value: '#4A5E4A', category: 'LEATHER' },
-  { name: 'Leather Emerald', value: '#2D7D6D', category: 'LEATHER' },
-  { name: 'Leather Burgundy', value: '#6B3A3A', category: 'LEATHER' },
-  { name: 'Leather Purple', value: '#6B4A6B', category: 'LEATHER' },
-  { name: 'Leather Navy', value: '#3A5A7C', category: 'LEATHER' },
-  { name: 'Leather Rust', value: '#8B4A4A', category: 'LEATHER' },
-  { name: 'Silicon Gray', value: '#5A5A5A', category: 'SILICON' },
-  { name: 'Silicon Olive', value: '#6B7A5A', category: 'SILICON' },
-  { name: 'Silicon Teal', value: '#4A7A7A', category: 'SILICON' },
-  { name: 'Silicon Forest', value: '#4A6B4A', category: 'SILICON' },
-  { name: 'Silicon Slate', value: '#5A5A6B', category: 'SILICON' },
-  { name: 'Aluminium Steel', value: '#A8A8A8', category: 'ALUMINIUM' },
-  { name: 'Aluminium Bronze', value: '#8B7355', category: 'ALUMINIUM' },
-  { name: 'Aluminium Slate', value: '#6B7A8B', category: 'ALUMINIUM' },
-  { name: 'Aluminium Gunmetal', value: '#4A4A5A', category: 'ALUMINIUM' },
-  { name: 'Aluminium Pewter', value: '#7A7A8B', category: 'ALUMINIUM' },
+  { name: "Leather Brown", value: "#6B5744", category: "LEATHER" },
+  { name: "Leather Olive", value: "#5A6B5A", category: "LEATHER" },
+  { name: "Leather Teal", value: "#4A7C7C", category: "LEATHER" },
+  { name: "Leather Forest", value: "#4A5E4A", category: "LEATHER" },
+  { name: "Leather Emerald", value: "#2D7D6D", category: "LEATHER" },
+  { name: "Leather Burgundy", value: "#6B3A3A", category: "LEATHER" },
+  { name: "Leather Purple", value: "#6B4A6B", category: "LEATHER" },
+  { name: "Leather Navy", value: "#3A5A7C", category: "LEATHER" },
+  { name: "Leather Rust", value: "#8B4A4A", category: "LEATHER" },
+  { name: "Silicon Gray", value: "#5A5A5A", category: "SILICON" },
+  { name: "Silicon Olive", value: "#6B7A5A", category: "SILICON" },
+  { name: "Silicon Teal", value: "#4A7A7A", category: "SILICON" },
+  { name: "Silicon Forest", value: "#4A6B4A", category: "SILICON" },
+  { name: "Silicon Slate", value: "#5A5A6B", category: "SILICON" },
+  { name: "Aluminium Steel", value: "#A8A8A8", category: "ALUMINIUM" },
+  { name: "Aluminium Bronze", value: "#8B7355", category: "ALUMINIUM" },
+  { name: "Aluminium Slate", value: "#6B7A8B", category: "ALUMINIUM" },
+  { name: "Aluminium Gunmetal", value: "#4A4A5A", category: "ALUMINIUM" },
+  { name: "Aluminium Pewter", value: "#7A7A8B", category: "ALUMINIUM" },
 ];
 
 const FurnitureCustomizer = () => {
   const { config } = useUIConfig();
   const { toast } = useToast();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+  const [expandedSections, setExpandedSections] = useState<
+    Record<string, boolean>
+  >({
     arms: false,
     armsFinish: true,
     legsFinish: false,
   });
+  // Product data for each image
+  const productData = [
+    {
+      name: "Buffet",
+      price: 15000,
+      oldPrice: 25000,
+      description: "Premium wooden buffet with storage",
+    },
+    {
+      name: "Storage Cabinet",
+      price: 18000,
+      oldPrice: 28000,
+      description: "Modern storage cabinet with drawers",
+    },
+    {
+      name: "Sideboard",
+      price: 20000,
+      oldPrice: 30000,
+      description: "Classic sideboard with compartments",
+    },
+  ];
+
+  const currentProduct = productData[selectedImage] || productData[0];
   const [selectedOptions, setSelectedOptions] = useState({
-    arms: 'Fixed Arms',
-    armsFinish: 'Leather Brown',
-    legsFinish: 'Steel',
+    arms: "Fixed Arms",
+    armsFinish: "Leather Brown",
+    legsFinish: "Steel",
   });
-  const [selectedColor, setSelectedColor] = useState('#6B5744');
+  const [selectedColor, setSelectedColor] = useState("#6B5744");
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [rotation, setRotation] = useState(0);
@@ -93,21 +126,21 @@ const FurnitureCustomizer = () => {
   };
 
   const customizationSections: CustomizationOption[] = [
-    { 
-      id: 'arms', 
-      name: 'Arms', 
+    {
+      id: "arms",
+      name: "Arms",
       value: selectedOptions.arms,
       colors: colorSwatches,
     },
     {
-      id: 'armsFinish',
-      name: 'Arms Finish',
+      id: "armsFinish",
+      name: "Arms Finish",
       value: selectedOptions.armsFinish,
       colors: colorSwatches,
     },
-    { 
-      id: 'legsFinish', 
-      name: 'Legs Finish', 
+    {
+      id: "legsFinish",
+      name: "Legs Finish",
       value: selectedOptions.legsFinish,
       colors: colorSwatches,
     },
@@ -118,25 +151,28 @@ const FurnitureCustomizer = () => {
   };
 
   const shadowClasses = {
-    none: 'shadow-none',
-    small: 'shadow-sm',
-    medium: 'shadow-md',
-    large: 'shadow-lg',
+    none: "shadow-none",
+    small: "shadow-sm",
+    medium: "shadow-md",
+    large: "shadow-lg",
   };
 
   const alignmentClasses = {
-    left: 'justify-start',
-    center: 'justify-center',
-    right: 'justify-end',
+    left: "justify-start",
+    center: "justify-center",
+    right: "justify-end",
   };
 
   const galleryAlignmentClasses = {
-    'grid-left': 'justify-start',
-    'grid-center': 'justify-center',
-    'grid-right': 'justify-end',
+    "grid-left": "justify-start",
+    "grid-center": "justify-center",
+    "grid-right": "justify-end",
   };
 
-  const layoutClass = config.layoutType === 'desktop' ? 'lg:grid-cols-[1fr_400px]' : 'grid-cols-1';
+  const layoutClass =
+    config.layoutType === "desktop"
+      ? "lg:grid-cols-[1fr_400px]"
+      : "grid-cols-1";
 
   return (
     <div
@@ -152,18 +188,24 @@ const FurnitureCustomizer = () => {
       <div className={`grid gap-6 mx-auto max-w-7xl ${layoutClass}`}>
         {/* Main Image Section */}
         <div className="flex flex-col gap-4">
-          {config.layoutType === 'desktop' && (
-            <div className={`flex gap-${Math.round(config.gallery.spacing / 4)} ${galleryAlignmentClasses[config.gallery.alignment]}`}>
+          {config.layoutType === "desktop" && (
+            <div
+              className={`flex gap-${Math.round(config.gallery.spacing / 4)} ${
+                galleryAlignmentClasses[config.gallery.alignment]
+              }`}
+            >
               {images.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
                   className={`transition-all duration-200 ${
-                    selectedImage === idx ? 'ring-2 ring-primary' : 'opacity-60 hover:opacity-100'
+                    selectedImage === idx
+                      ? "ring-2 ring-primary"
+                      : "opacity-60 hover:opacity-100"
                   }`}
                   style={{
                     borderRadius: `${config.gallery.imageBorderRadius}px`,
-                    overflow: 'hidden',
+                    overflow: "hidden",
                   }}
                 >
                   <img
@@ -178,18 +220,20 @@ const FurnitureCustomizer = () => {
 
           <div
             className={`bg-secondary/30 relative group overflow-hidden ${
-              isFullscreen ? 'fixed inset-0 z-50 rounded-none' : ''
+              isFullscreen ? "fixed inset-0 z-50 rounded-none" : ""
             }`}
             style={{
-              borderRadius: isFullscreen ? '0' : `${config.layout.cardCornerRadius}px`,
+              borderRadius: isFullscreen
+                ? "0"
+                : `${config.layout.cardCornerRadius}px`,
               border: `${config.stroke.strokeWeight}px solid ${config.stroke.strokeColor}`,
             }}
           >
-            <div 
+            <div
               className="relative overflow-hidden h-full flex items-center justify-center"
-              style={{ 
-                padding: isFullscreen ? '2rem' : '0',
-                minHeight: isFullscreen ? '100vh' : 'auto'
+              style={{
+                padding: isFullscreen ? "2rem" : "0",
+                minHeight: isFullscreen ? "100vh" : "auto",
               }}
             >
               <div
@@ -209,28 +253,28 @@ const FurnitureCustomizer = () => {
                 />
               </div>
             </div>
-            <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-              <Button 
-                size="icon" 
-                variant="secondary" 
-                className="rounded-full shadow-lg"
+            <div className="absolute top-2 right-2 md:top-4 md:right-4 flex flex-col gap-1 md:gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity z-10">
+              <Button
+                size="icon"
+                variant="secondary"
+                className="rounded-full shadow-lg h-8 w-8 md:h-10 md:w-10"
                 onClick={handleRotate}
                 title="Rotate"
               >
-                <RotateCcw className="h-4 w-4" />
+                <RotateCcw className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
-              <Button 
-                size="icon" 
-                variant="secondary" 
+              <Button
+                size="icon"
+                variant="secondary"
                 className="rounded-full shadow-lg"
                 onClick={handleFullscreen}
                 title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
               >
                 <Maximize2 className="h-4 w-4" />
               </Button>
-              <Button 
-                size="icon" 
-                variant="secondary" 
+              <Button
+                size="icon"
+                variant="secondary"
                 className="rounded-full shadow-lg"
                 onClick={handleZoomIn}
                 disabled={zoomLevel >= 3}
@@ -238,9 +282,9 @@ const FurnitureCustomizer = () => {
               >
                 <ZoomIn className="h-4 w-4" />
               </Button>
-              <Button 
-                size="icon" 
-                variant="secondary" 
+              <Button
+                size="icon"
+                variant="secondary"
                 className="rounded-full shadow-lg"
                 onClick={handleZoomOut}
                 disabled={zoomLevel <= 0.5}
@@ -251,9 +295,9 @@ const FurnitureCustomizer = () => {
             </div>
             {(zoomLevel !== 1 || rotation !== 0) && (
               <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                <Button 
-                  size="sm" 
-                  variant="secondary" 
+                <Button
+                  size="sm"
+                  variant="secondary"
                   className="shadow-lg"
                   onClick={handleResetView}
                 >
@@ -263,9 +307,9 @@ const FurnitureCustomizer = () => {
             )}
             {isFullscreen && (
               <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                <Button 
-                  size="sm" 
-                  variant="secondary" 
+                <Button
+                  size="sm"
+                  variant="secondary"
                   className="shadow-lg"
                   onClick={handleFullscreen}
                 >
@@ -282,7 +326,7 @@ const FurnitureCustomizer = () => {
             )}
           </div>
 
-          {config.layoutType === 'desktop' && (
+          {config.layoutType === "desktop" && (
             <Button variant="outline" className="w-fit">
               <Copy className="h-4 w-4" />
               View in your room
@@ -307,7 +351,7 @@ const FurnitureCustomizer = () => {
                   fontWeight: config.typography.fontWeight + 200,
                 }}
               >
-                Buffet
+                {currentProduct.name}
               </h1>
               <Button size="icon" variant="ghost">
                 <Copy className="h-4 w-4" />
@@ -315,7 +359,9 @@ const FurnitureCustomizer = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Customize your Chair</span>
+              <span className="text-muted-foreground">
+                Customize your Chair
+              </span>
               <Button size="icon" variant="ghost">
                 <svg
                   className="h-4 w-4"
@@ -349,37 +395,56 @@ const FurnitureCustomizer = () => {
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-secondary rounded-md flex items-center justify-center">
-                        <span className="text-xs font-medium">{section.id === 'arms' ? '1' : section.id === 'armsFinish' ? '2' : '3'}</span>
+                        <span className="text-xs font-medium">
+                          {section.id === "arms"
+                            ? "1"
+                            : section.id === "armsFinish"
+                            ? "2"
+                            : "3"}
+                        </span>
                       </div>
                       <div className="text-left">
                         <div className="font-medium">{section.name}</div>
-                        <div className="text-sm text-muted-foreground">{section.value}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {section.value}
+                        </div>
                       </div>
                     </div>
-                    {expandedSections[section.id] ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                    {expandedSections[section.id] ? (
+                      <ChevronUp className="h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4" />
+                    )}
                   </button>
 
                   {expandedSections[section.id] && section.colors && (
                     <div className="p-4 pt-0 space-y-4 animate-accordion-down">
-                      {['LEATHER', 'SILICON', 'ALUMINIUM'].map((category) => {
-                        const categoryColors = section.colors!.filter((c) => c.category === category);
+                      {["LEATHER", "SILICON", "ALUMINIUM"].map((category) => {
+                        const categoryColors = section.colors!.filter(
+                          (c) => c.category === category
+                        );
                         if (categoryColors.length === 0) return null;
 
                         return (
                           <div key={category}>
-                            <div className="text-xs font-medium text-muted-foreground mb-2">{category}</div>
+                            <div className="text-xs font-medium text-muted-foreground mb-2">
+                              {category}
+                            </div>
                             <div className="grid grid-cols-5 gap-2">
                               {categoryColors.map((color) => (
                                 <button
                                   key={color.name}
                                   onClick={() => {
-                                    setSelectedOptions((prev) => ({ ...prev, [section.id]: color.name }));
+                                    setSelectedOptions((prev) => ({
+                                      ...prev,
+                                      [section.id]: color.name,
+                                    }));
                                     setSelectedColor(color.value);
                                   }}
                                   className={`w-10 h-10 rounded-full transition-all ${
                                     selectedOptions[section.id] === color.name
-                                      ? 'ring-2 ring-primary ring-offset-2'
-                                      : 'hover:scale-110'
+                                      ? "ring-2 ring-primary ring-offset-2"
+                                      : "hover:scale-110"
                                   }`}
                                   style={{ backgroundColor: color.value }}
                                   title={color.name}
@@ -405,16 +470,25 @@ const FurnitureCustomizer = () => {
           >
             <div className="flex items-center justify-between mb-4">
               <div>
-                <div className="text-sm text-muted-foreground">Product Price</div>
+                <div className="text-sm text-muted-foreground">
+                  Product Price
+                </div>
                 <div className="text-2xl font-bold">
-                  ₹15,000 <span className="text-lg text-muted-foreground line-through">₹25,000</span>
+                  ₹{currentProduct.price.toLocaleString("en-IN")}
+                  <span className="text-lg text-muted-foreground line-through">
+                    ₹{currentProduct.oldPrice.toLocaleString("en-IN")}
+                  </span>
                 </div>
               </div>
             </div>
-            <div className={`flex ${alignmentClasses[config.button.alignment]}`}>
+            <div
+              className={`flex ${alignmentClasses[config.button.alignment]}`}
+            >
               <Button
                 onClick={handleAddToCart}
-                className={`transition-all ${shadowClasses[config.button.shadow]}`}
+                className={`transition-all ${
+                  shadowClasses[config.button.shadow]
+                }`}
                 style={{
                   borderRadius: `${config.button.borderRadius}px`,
                   backgroundColor: config.button.backgroundColor,
