@@ -56,21 +56,25 @@ const FurnitureCustomizer = () => {
     legsFinish: false,
   });
   // Product data for each image
+  // Product data for each image
   const productData = [
     {
       name: "Buffet",
+      type: "Buffet",
       price: 15000,
       oldPrice: 25000,
       description: "Premium wooden buffet with storage",
     },
     {
       name: "Storage Cabinet",
+      type: "Cabinet",
       price: 18000,
       oldPrice: 28000,
       description: "Modern storage cabinet with drawers",
     },
     {
       name: "Sideboard",
+      type: "Sideboard",
       price: 20000,
       oldPrice: 30000,
       description: "Classic sideboard with compartments",
@@ -369,12 +373,16 @@ const FurnitureCustomizer = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">
-                Customize your Chair
+              <span className="text-muted-foreground text-sm md:text-base transition-all duration-300">
+                Customize your {currentProduct.type}
               </span>
-              <Button size="icon" variant="ghost">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-8 w-8 md:h-10 md:w-10"
+              >
                 <svg
-                  className="h-4 w-4"
+                  className="h-3 w-3 md:h-4 md:w-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
