@@ -112,22 +112,22 @@ const FurnitureCustomizer = () => {
   };
 
   const handleAddToCart = () => {
-  const product = productData[selectedImage]; // get the currently clicked product
+    const product = productData[selectedImage]; // get the currently clicked product
 
-  toast({
-    title: "Added to cart! 🛒",
-    description: (
-      <div className="mt-2 space-y-1">
-        <p className="font-semibold">
-          {product.name} - ₹{product.price.toLocaleString("en-IN")}
-        </p>
-        <p className="text-sm">Arms: {selectedOptions.arms}</p>
-        <p className="text-sm">Arms Finish: {selectedOptions.armsFinish}</p>
-        <p className="text-sm">Legs Finish: {selectedOptions.legsFinish}</p>
-      </div>
-    ),
-  });
-};
+    toast({
+      title: "Added to cart! 🛒",
+      description: (
+        <div className="mt-2 space-y-1">
+          <p className="font-semibold">
+            {product.name} - ₹{product.price.toLocaleString("en-IN")}
+          </p>
+          <p className="text-sm">Arms: {selectedOptions.arms}</p>
+          <p className="text-sm">Arms Finish: {selectedOptions.armsFinish}</p>
+          <p className="text-sm">Legs Finish: {selectedOptions.legsFinish}</p>
+        </div>
+      ),
+    });
+  };
 
   const customizationSections: CustomizationOption[] = [
     {
@@ -186,15 +186,20 @@ const FurnitureCustomizer = () => {
         fontFamily: config.typography.fontFamily,
         fontSize: `${config.typography.fontSize}px`,
         fontWeight: config.typography.fontWeight,
-        padding: `${config.layout.containerPadding}px`,
+        padding:
+          window.innerWidth < 768
+            ? "12px"
+            : `${config.layout.containerPadding}px`,
       }}
     >
-      <div className={`grid gap-6 mx-auto max-w-7xl ${layoutClass}`}>
+      <div className={`grid gap-4 lg:gap-6 mx-auto max-w-7xl ${layoutClass}`}>
         {/* Main Image Section */}
         <div className="flex flex-col gap-4">
           {config.layoutType === "desktop" && (
             <div
-              className={`flex gap-${Math.round(config.gallery.spacing / 4)} ${
+              className={`flex gap-2 md:gap-${Math.round(
+                config.gallery.spacing / 4
+              )} overflow-x-auto pb-2 ${
                 galleryAlignmentClasses[config.gallery.alignment]
               }`}
             >
@@ -202,7 +207,7 @@ const FurnitureCustomizer = () => {
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
-                  className={`transition-all duration-200 ${
+                  className={`transition-all duration-200 flex-shrink-0 ${
                     selectedImage === idx
                       ? "ring-2 ring-primary"
                       : "opacity-60 hover:opacity-100"
@@ -215,7 +220,7 @@ const FurnitureCustomizer = () => {
                   <img
                     src={img}
                     alt={`View ${idx + 1}`}
-                    className="w-20 h-20 object-cover"
+                    className="w-16 h-16 md:w-20 md:h-20 object-cover"
                   />
                 </button>
               ))}
@@ -231,6 +236,7 @@ const FurnitureCustomizer = () => {
                 ? "0"
                 : `${config.layout.cardCornerRadius}px`,
               border: `${config.stroke.strokeWeight}px solid ${config.stroke.strokeColor}`,
+              minHeight: window.innerWidth < 768 ? "300px" : "auto",
             }}
           >
             <div
@@ -270,31 +276,31 @@ const FurnitureCustomizer = () => {
               <Button
                 size="icon"
                 variant="secondary"
-                className="rounded-full shadow-lg"
+                className="rounded-full shadow-lg h-8 w-8 md:h-10 md:w-10"
                 onClick={handleFullscreen}
                 title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
               >
-                <Maximize2 className="h-4 w-4" />
+                <Maximize2 className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
               <Button
                 size="icon"
                 variant="secondary"
-                className="rounded-full shadow-lg"
+                className="rounded-full shadow-lg h-8 w-8 md:h-10 md:w-10"
                 onClick={handleZoomIn}
                 disabled={zoomLevel >= 3}
                 title="Zoom In"
               >
-                <ZoomIn className="h-4 w-4" />
+                <ZoomIn className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
               <Button
                 size="icon"
                 variant="secondary"
-                className="rounded-full shadow-lg"
+                className="rounded-full shadow-lg h-8 w-8 md:h-10 md:w-10"
                 onClick={handleZoomOut}
                 disabled={zoomLevel <= 0.5}
                 title="Zoom Out"
               >
-                <ZoomOut className="h-4 w-4" />
+                <ZoomOut className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
             </div>
             {(zoomLevel !== 1 || rotation !== 0) && (
@@ -339,19 +345,26 @@ const FurnitureCustomizer = () => {
             border: `${config.stroke.strokeWeight}px solid ${config.stroke.strokeColor}`,
           }}
         >
-          <div className="p-6 space-y-4 flex-1">
+          <div className="p-4 md:p-6 space-y-3 md:space-y-4 flex-1">
             <div className="flex items-start justify-between">
               <h1
-                className="font-semibold"
+                className="font-semibold transition-all duration-300 text-xl md:text-2xl"
                 style={{
-                  fontSize: `${config.typography.fontSize * 1.5}px`,
+                  fontSize:
+                    window.innerWidth < 768
+                      ? `${config.typography.fontSize * 1.2}px`
+                      : `${config.typography.fontSize * 1.5}px`,
                   fontWeight: config.typography.fontWeight + 200,
                 }}
               >
                 {currentProduct.name}
               </h1>
-              <Button size="icon" variant="ghost">
-                <Copy className="h-4 w-4" />
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-8 w-8 md:h-10 md:w-10"
+              >
+                <Copy className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
             </div>
 
@@ -415,7 +428,7 @@ const FurnitureCustomizer = () => {
                   </button>
 
                   {expandedSections[section.id] && section.colors && (
-                    <div className="p-4 pt-0 space-y-4 animate-accordion-down">
+                    <div className="p-3 md:p-4 pt-0 space-y-3 md:space-y-4 animate-accordion-down">
                       {["LEATHER", "SILICON", "ALUMINIUM"].map((category) => {
                         const categoryColors = section.colors!.filter(
                           (c) => c.category === category
@@ -427,7 +440,7 @@ const FurnitureCustomizer = () => {
                             <div className="text-xs font-medium text-muted-foreground mb-2">
                               {category}
                             </div>
-                            <div className="grid grid-cols-5 gap-2">
+                            <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
                               {categoryColors.map((color) => (
                                 <button
                                   key={color.name}
@@ -438,7 +451,7 @@ const FurnitureCustomizer = () => {
                                     }));
                                     setSelectedColor(color.value);
                                   }}
-                                  className={`w-10 h-10 rounded-full transition-all ${
+                                  className={`w-8 h-8 md:w-10 md:h-10 rounded-full transition-all ${
                                     selectedOptions[section.id] === color.name
                                       ? "ring-2 ring-primary ring-offset-2"
                                       : "hover:scale-110"
@@ -459,20 +472,20 @@ const FurnitureCustomizer = () => {
           </div>
 
           <div
-            className="p-6 border-t mt-auto"
+            className="p-4 md:p-6 border-t mt-auto"
             style={{
               borderColor: config.stroke.strokeColor,
               borderWidth: `${config.stroke.strokeWeight}px 0 0 0`,
             }}
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3 md:mb-4">
               <div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-xs md:text-sm text-muted-foreground">
                   Product Price
                 </div>
-                <div className="text-2xl font-bold">
+                <div className="text-xl md:text-2xl font-bold">
                   ₹{currentProduct.price.toLocaleString("en-IN")}
-                  <span className="text-lg text-muted-foreground line-through">
+                  <span className="text-base md:text-lg text-muted-foreground line-through ml-2">
                     ₹{currentProduct.oldPrice.toLocaleString("en-IN")}
                   </span>
                 </div>
@@ -483,13 +496,14 @@ const FurnitureCustomizer = () => {
             >
               <Button
                 onClick={handleAddToCart}
-                className={`transition-all ${
+                className={`transition-all w-full md:w-auto ${
                   shadowClasses[config.button.shadow]
                 }`}
                 style={{
                   borderRadius: `${config.button.borderRadius}px`,
                   backgroundColor: config.button.backgroundColor,
                   color: config.button.textColor,
+                  padding: window.innerWidth < 768 ? "12px 24px" : "10px 32px",
                 }}
               >
                 Add to cart
