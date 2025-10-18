@@ -329,13 +329,6 @@ const FurnitureCustomizer = () => {
               </div>
             )}
           </div>
-
-          {config.layoutType === "desktop" && (
-            <Button variant="outline" className="w-fit">
-              <Copy className="h-4 w-4" />
-              View in your room
-            </Button>
-          )}
         </div>
 
         {/* Customization Panel */}
