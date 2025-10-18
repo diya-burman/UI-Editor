@@ -112,18 +112,22 @@ const FurnitureCustomizer = () => {
   };
 
   const handleAddToCart = () => {
-    toast({
-      title: "Added to cart! 🛒",
-      description: (
-        <div className="mt-2 space-y-1">
-          <p className="font-semibold">Buffet - ₹15,000</p>
-          <p className="text-sm">Arms: {selectedOptions.arms}</p>
-          <p className="text-sm">Arms Finish: {selectedOptions.armsFinish}</p>
-          <p className="text-sm">Legs Finish: {selectedOptions.legsFinish}</p>
-        </div>
-      ),
-    });
-  };
+  const product = productData[selectedImage]; // get the currently clicked product
+
+  toast({
+    title: "Added to cart! 🛒",
+    description: (
+      <div className="mt-2 space-y-1">
+        <p className="font-semibold">
+          {product.name} - ₹{product.price.toLocaleString("en-IN")}
+        </p>
+        <p className="text-sm">Arms: {selectedOptions.arms}</p>
+        <p className="text-sm">Arms Finish: {selectedOptions.armsFinish}</p>
+        <p className="text-sm">Legs Finish: {selectedOptions.legsFinish}</p>
+      </div>
+    ),
+  });
+};
 
   const customizationSections: CustomizationOption[] = [
     {
